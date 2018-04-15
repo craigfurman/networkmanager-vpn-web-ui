@@ -1,4 +1,4 @@
-.PHONY: compile test clean run
+.PHONY: compile test clean run vendordeps
 
 all: compile
 
@@ -13,3 +13,6 @@ run:
 
 clean:
 	go clean
+
+vendordeps:
+	govendor add +external
