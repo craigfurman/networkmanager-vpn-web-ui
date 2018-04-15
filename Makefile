@@ -1,4 +1,4 @@
-.PHONY: compile test clean
+.PHONY: compile test clean run
 
 all: compile
 
@@ -7,6 +7,9 @@ compile:
 
 test:
 	go test ./...
+
+run:
+	go run main.go
 
 clean:
 	go clean
