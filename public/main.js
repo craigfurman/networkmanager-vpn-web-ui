@@ -10,7 +10,7 @@ function connHtml(conn) {
   var status = conn.active ? 'ON' : 'OFF';
   return '<div class="conn">' +
     '<div class="conn-name">' + conn.name + '</div>' +
-    '<div class="conn-status">' + status + '</div>' +
+    '<button type="button" class="conn-status">' + status + '</button>' +
     '</div>';
 }
 
