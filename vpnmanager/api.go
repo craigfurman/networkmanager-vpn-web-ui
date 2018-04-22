@@ -12,6 +12,7 @@ func NewAPI(netManager NetworkManager) *VpnConnectionManager {
 		NetworkManager: netManager,
 		Router:         mux.NewRouter(),
 	}
+
 	manager.HandleFunc("/api/connections", manager.listConnections).Methods(http.MethodGet)
 
 	return manager
