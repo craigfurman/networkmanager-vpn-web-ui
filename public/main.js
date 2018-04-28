@@ -1,25 +1,50 @@
 function onReady(fn) {
-  if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading"){
+  if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
     fn();
   } else {
     document.addEventListener('DOMContentLoaded', fn);
   }
 }
 
-function connHtml(conn) {
-  var status = conn.active ? 'ON' : 'OFF';
-  return '<div class="conn">' +
-    '<div class="conn-name">' + conn.name + '</div>' +
-    '<button type="button" class="conn-status">' + status + '</button>' +
-    '</div>';
+function refreshConns() {
+  const req = new Request('GET', '/api/connections');
+  req.make(function(xhr) {
+    const conns = JSON.parse(xhr.responseText);
+    const connList = document.getElementById('conn-list');
+    connList.innerHTML = connsHtml(conns);
+
+    connList.querySelectorAll('button.conn-toggle').forEach(function(el) {
+      const currentlyActive = el.textContent == 'ON'
+      el.addEventListener('click', function() {
+        setConnState({
+          name: el.id,
+          active: !currentlyActive
+        });
+      });
+    });
+  });
+}
+
+function setConnState(conn) {
+  const req = new Request('PUT', `/api/connections/${encodeURI(conn.name)}?active=${encodeURI(conn.active)}`);
+  req.make(refreshConns);
 }
 
 function connsHtml(conns) {
-  var s = '';
-  for (var conn of conns) {
-    s += connHtml(conn);
-  }
-  return s;
+  return conns.map(function(conn) {
+    return connHtml(conn);
+  }).reduce(function(htmlForConns, htmlForConn) {
+    return htmlForConns + htmlForConn;
+  }, '');
+}
+
+function connHtml(conn) {
+  const status = conn.active ? 'ON' : 'OFF';
+  return '<div class="conn">' +
+    '<div class="conn-name">' + conn.name + '</div>' +
+    '<button class="conn-toggle" type="button" id="'+ conn.name +
+    '" class="conn-status">' + status + '</button>' +
+    '</div>';
 }
 
 class Request {
@@ -29,7 +54,7 @@ class Request {
   }
 
   make(onSuccess) {
-    var request = new XMLHttpRequest();
+    const request = new XMLHttpRequest();
     request.open(this.method, this.url, true);
 
     request.onload = function() {
@@ -46,15 +71,6 @@ class Request {
 
     request.send();
   }
-}
-
-function refreshConns() {
-  var req = new Request('GET', '/api/connections');
-  req.make(function(xhr) {
-    var conns = JSON.parse(xhr.responseText);
-    var connList = document.getElementById('conn-list');
-    connList.innerHTML = connsHtml(conns);
-  });
 }
 
 onReady(function() {

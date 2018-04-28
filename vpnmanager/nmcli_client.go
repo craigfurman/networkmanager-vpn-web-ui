@@ -1,6 +1,7 @@
 package vpnmanager
 
 import (
+	"fmt"
 	"os/exec"
 	"strings"
 )
@@ -14,6 +15,19 @@ func (*NmcliClient) ListConnections() ([]Connection, error) {
 		return nil, err
 	}
 	return ParseVPNConnectionList(string(output)), nil
+}
+
+func (*NmcliClient) SetConnection(conn Connection) error {
+	verb := "down"
+	if conn.Active {
+		verb = "up"
+	}
+
+	output, err := exec.Command("nmcli", "connection", verb, conn.Name).CombinedOutput()
+	if err != nil {
+		return fmt.Errorf("couldn't set connection: output: '%s', error: '%s'", string(output), err)
+	}
+	return nil
 }
 
 func ParseVPNConnectionList(nmcliConShowOutput string) []Connection {

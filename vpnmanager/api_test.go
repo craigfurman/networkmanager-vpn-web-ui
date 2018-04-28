@@ -21,8 +21,7 @@ func TestListVPNConnections(t *testing.T) {
 	}
 	networkManager.On("ListConnections").Return(expectedConns, nil)
 
-	httpHandler := vpnmanager.NewAPI(networkManager)
-	server := httptest.NewServer(httpHandler)
+	server := newTestServer(networkManager)
 	defer server.Close()
 
 	resp, err := http.Get(fmt.Sprintf("%s/api/connections", server.URL))
@@ -38,6 +37,29 @@ func TestListVPNConnections(t *testing.T) {
 	assert.Equal(t, expectedConns, conns)
 }
 
+func TestSetConnection(t *testing.T) {
+	networkManager := &mockNetworkManager{}
+	expectedConn := vpnmanager.Connection{Name: "a-conn", Active: true}
+	networkManager.On("SetConnection", expectedConn).Return(nil)
+
+	server := newTestServer(networkManager)
+	defer server.Close()
+
+	uri := fmt.Sprintf("%s/api/connections/a-conn?active=true", server.URL)
+	req, err := http.NewRequest(http.MethodPut, uri, nil)
+	require.Nil(t, err)
+	resp, err := http.DefaultClient.Do(req)
+	require.Nil(t, err)
+	require.Equal(t, resp.StatusCode, http.StatusOK)
+
+	networkManager.AssertCalled(t, "SetConnection", expectedConn)
+}
+
+func newTestServer(networkManager vpnmanager.NetworkManager) *httptest.Server {
+	httpHandler := vpnmanager.NewAPI(networkManager)
+	return httptest.NewServer(httpHandler)
+}
+
 type mockNetworkManager struct {
 	mock.Mock
 }
@@ -45,4 +67,9 @@ type mockNetworkManager struct {
 func (m *mockNetworkManager) ListConnections() ([]vpnmanager.Connection, error) {
 	args := m.Called()
 	return args.Get(0).([]vpnmanager.Connection), args.Error(1)
+}
+
+func (m *mockNetworkManager) SetConnection(conn vpnmanager.Connection) error {
+	args := m.Called(conn)
+	return args.Error(0)
 }
