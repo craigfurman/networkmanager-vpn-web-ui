@@ -9,7 +9,7 @@ import (
 type NmcliClient struct{}
 
 func (*NmcliClient) ListConnections() ([]Connection, error) {
-	output, err := exec.Command("nmcli", "connection", "show").CombinedOutput()
+	output, err := exec.Command("nmcli", "connection", "show", "--order", "name").CombinedOutput()
 	if err != nil {
 		// TODO test
 		return nil, err

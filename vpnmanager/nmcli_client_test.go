@@ -14,7 +14,7 @@ another_wifi_network  52500cc8-44f9-4587-bf0c-450d9859492d  wifi  --
 another_vpn           b89368fc-2e50-4767-8429-165bfe5dd3cc  vpn   iface
 `
 
-func TestParseVPNConnectionList(t *testing.T) {
+func TestParseVPNConnectionListReturnsVPNConnectionsSortedAlphabetically(t *testing.T) {
 	conns := vpnmanager.ParseVPNConnectionList(exampleOutput)
 	expectedConns := []vpnmanager.Connection{
 		{Name: "a_vpn", Active: false},
