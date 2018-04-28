@@ -22,6 +22,16 @@ function refreshConns() {
         });
       });
     });
+
+    refreshIP();
+  });
+}
+
+function refreshIP() {
+  const req = new Request('GET', '/api/address');
+  req.make(function(xhr) {
+    const ip = JSON.parse(xhr.responseText);
+    document.getElementById('ip-address').textContent = `IP Address: ${ip.ip}`;
   });
 }
 

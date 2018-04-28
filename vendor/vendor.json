@@ -16,11 +16,23 @@
 			"revisionTime": "2018-04-03T18:23:30Z"
 		},
 		{
+			"checksumSHA1": "qekNouYjoxRxaEZeD6GtySY1wlM=",
+			"path": "github.com/jpillora/backoff",
+			"revision": "8eab2debe79d12b7bd3d10653910df25fa9552ba",
+			"revisionTime": "2017-09-18T00:21:02Z"
+		},
+		{
 			"checksumSHA1": "LuFv4/jlrmFNnDb/5SCSEPAM9vU=",
 			"origin": "github.com/stretchr/testify/vendor/github.com/pmezard/go-difflib/difflib",
 			"path": "github.com/pmezard/go-difflib/difflib",
 			"revision": "c679ae2cc0cb27ec3293fea7e254e47386f05d69",
 			"revisionTime": "2018-03-14T08:05:35Z"
+		},
+		{
+			"checksumSHA1": "8Ulw3QC822MLPIaG9eBeOW8jUhg=",
+			"path": "github.com/rdegges/go-ipify",
+			"revision": "2d94a6a86c4055118cc30fae2aaed47ec01f2210",
+			"revisionTime": "2015-05-26T03:55:02Z"
 		},
 		{
 			"checksumSHA1": "F7CERINyYGUQGpVUt5vF/jMTwTY=",
