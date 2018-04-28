@@ -16,6 +16,7 @@ function refreshConns() {
     connList.querySelectorAll('button.conn-toggle').forEach(function(el) {
       const currentlyActive = el.textContent == 'ON'
       el.addEventListener('click', function() {
+        el.textContent = 'CHANGING...'
         setConnState({
           name: el.id,
           active: !currentlyActive
