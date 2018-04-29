@@ -29,5 +29,5 @@ dist: compile
 	mkdir -p dist/$(name)
 	cp networkmanager-vpn-web-ui LICENSE dist/$(name)
 	cp -a public dist/$(name)
-	tar -czf $(name).tar.gz -C dist networkmanager-vpn-web-ui
-	rm -rf $(name)
+	tar --owner root --group root -czf $(name).tar.gz -C dist networkmanager-vpn-web-ui
+	rm -rf dist
