@@ -23,6 +23,9 @@ performs no validation on inputs.
 
 ## Installation
 
+Note that to actually manage connections, NetworkManager must have already
+stored the VPN credentials for the user you run the service as.
+
 ### From source
 
 `go get github.com/craigfurman/networkmanager-vpn-web-ui`, or otherwise clone
