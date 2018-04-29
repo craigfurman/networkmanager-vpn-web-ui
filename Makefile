@@ -28,7 +28,7 @@ version = 0.1.0
 
 dist: compile
 	mkdir $(name)-$(version)
-	cp networkmanager-vpn-web-ui $(name)-$(version)
+	cp networkmanager-vpn-web-ui LICENSE $(name)-$(version)
 	cp -a public $(name)-$(version)
 	tar -czf $(name)-$(version).tar.gz networkmanager-vpn-web-ui-$(version)
 	rm -rf $(name)-$(version)
