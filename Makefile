@@ -24,11 +24,10 @@ vendordeps:
 	govendor add +external
 
 name = networkmanager-vpn-web-ui
-version = 0.1.0
 
 dist: compile
-	mkdir $(name)-$(version)
-	cp networkmanager-vpn-web-ui LICENSE $(name)-$(version)
-	cp -a public $(name)-$(version)
-	tar -czf $(name)-$(version).tar.gz networkmanager-vpn-web-ui-$(version)
-	rm -rf $(name)-$(version)
+	mkdir -p dist/$(name)
+	cp networkmanager-vpn-web-ui LICENSE dist/$(name)
+	cp -a public dist/$(name)
+	tar -czf $(name).tar.gz -C dist networkmanager-vpn-web-ui
+	rm -rf $(name)
