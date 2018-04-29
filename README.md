@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/craigfurman/networkmanager-vpn-web-ui.svg?style=svg)](https://circleci.com/gh/craigfurman/networkmanager-vpn-web-ui)
 
-A web UI for remotely modifying NetworkManager-managed VPN connections.
+A web UI for remotely managing NetworkManager-managed VPN connections.
 
 ## Why?
 
