@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -10,23 +11,31 @@ import (
 	"github.com/urfave/negroni"
 )
 
-// Overridden at link time on release, cannot non-string
-var dist = "false"
+// Overridden at link time on release
+var staticFilesDir = ""
 
 func main() {
 	bindAddress := flag.String("bind-address", ":8080", "bind address")
 	flag.Parse()
 
-	staticFileDir := "public"
-	if dist == "true" {
-		staticFileDir = filepath.Join(filepath.Dir(os.Args[0]), "public")
+	cwd, err := os.Getwd()
+	if err != nil {
+		panic(err)
 	}
+
+	if staticFilesDir == "" {
+		staticFilesDir = filepath.Join(cwd, "public")
+	}
+	if staticFilesDir == "_" {
+		staticFilesDir = filepath.Join(filepath.Dir(os.Args[0]), "public")
+	}
+	fmt.Println(staticFilesDir)
 
 	api := vpnmanager.NewAPI(&vpnmanager.NmcliClient{})
 	server := negroni.New(
 		negroni.NewRecovery(),
 		negroni.NewLogger(),
-		negroni.NewStatic(http.Dir(staticFileDir)),
+		negroni.NewStatic(http.Dir(staticFilesDir)),
 	)
 	server.UseHandler(api)
 	server.Run(*bindAddress)

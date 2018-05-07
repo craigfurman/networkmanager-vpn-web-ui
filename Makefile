@@ -4,8 +4,10 @@ name = networkmanager-vpn-web-ui
 
 all: $(name)
 
+NMUI_STATIC_FILES_DIR ?= "_"
+
 $(name):
-	go build -ldflags "-X main.dist=true"
+	go build -ldflags "-X main.staticFilesDir=$(NMUI_STATIC_FILES_DIR)"
 
 test:
 	go test ./...
