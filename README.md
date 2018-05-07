@@ -33,7 +33,7 @@ this project into your GOPATH.
 
 To run in dev mode: `make run`.
 
-To create a distributable archive, `make dist`. Untar the resulting tarball
+To create a distributable archive, `make disttar`. Untar the resulting tarball
 somewhere (e.g. `/opt`), and execute the binary.
 
 ### systemd service

@@ -1,8 +1,10 @@
-.PHONY: compile test testdocker clean run vendordeps
+name = networkmanager-vpn-web-ui
 
-all: compile
+.PHONY: test testdocker clean run vendordeps
 
-compile:
+all: $(name)
+
+$(name):
 	go build -ldflags "-X main.dist=true"
 
 test:
@@ -19,15 +21,18 @@ run:
 
 clean:
 	go clean
+	rm -f $(name).tar.gz
+	rm -rf dist
 
 vendordeps:
 	govendor add +external
 
-name = networkmanager-vpn-web-ui
+disttar: $(name).tar.gz
 
-dist: compile
-	mkdir -p dist/$(name)
-	cp networkmanager-vpn-web-ui LICENSE dist/$(name)
-	cp -a public dist/$(name)
+dist: $(name)
+	mkdir -p dist/$(name) && \
+		cp networkmanager-vpn-web-ui LICENSE dist/$(name) && \
+		cp -a public dist/$(name)
+
+$(name).tar.gz: dist
 	tar --owner root --group root -czf $(name).tar.gz -C dist networkmanager-vpn-web-ui
-	rm -rf dist
