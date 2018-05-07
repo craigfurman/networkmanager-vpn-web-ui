@@ -36,13 +36,9 @@ To run in dev mode: `make run`.
 To create a distributable archive, `make disttar`. Untar the resulting tarball
 somewhere (e.g. `/opt`), and execute the binary.
 
-### systemd service
-
-Coming soon.
-
 ### Arch Linux
 
-Coming soon.
+[AUR](https://aur.archlinux.org/packages/networkmanager-vpn-web-ui/).
 
 ## Contributing
 
