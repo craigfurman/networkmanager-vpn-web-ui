@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -29,7 +28,6 @@ func main() {
 	if staticFilesDir == "_" {
 		staticFilesDir = filepath.Join(filepath.Dir(os.Args[0]), "public")
 	}
-	fmt.Println(staticFilesDir)
 
 	api := vpnmanager.NewAPI(&vpnmanager.NmcliClient{})
 	server := negroni.New(
