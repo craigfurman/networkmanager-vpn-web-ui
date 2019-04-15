@@ -3,8 +3,11 @@ package vpnmanager
 import (
 	"fmt"
 	"os/exec"
+	"regexp"
 	"strings"
 )
+
+var vpnConnRe = regexp.MustCompile(`^(?P<name>.+)\s+\w{8}\-\w{4}\-\w{4}\-\w{4}\-\w{12}\s+(?P<type>\w+)\s+(?P<active>.*)$`)
 
 type NmcliClient struct{}
 
@@ -38,10 +41,10 @@ func ParseVPNConnectionList(nmcliConShowOutput string) []Connection {
 			continue
 		}
 
-		cols := strings.Fields(line)
-		if cols[2] == "vpn" {
+		captures := vpnConnRe.FindStringSubmatch(line)
+		if strings.TrimSpace(captures[2]) == "vpn" {
 			conns = append(conns, Connection{
-				Name: cols[0], Active: cols[3] != "--",
+				Name: strings.TrimSpace(captures[1]), Active: strings.TrimSpace(captures[3]) != "--",
 			})
 		}
 	}
