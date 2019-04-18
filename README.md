@@ -1,6 +1,6 @@
 # networkmanager-vpn-web-ui
 
-[![CircleCI](https://circleci.com/gh/craigfurman/networkmanager-vpn-web-ui.svg?style=svg)](https://circleci.com/gh/craigfurman/networkmanager-vpn-web-ui)
+**Moved:** https://gitlab.com/craigfurman/networkmanager-vpn-web-ui
 
 A web UI for remotely managing NetworkManager-managed VPN connections.
 
